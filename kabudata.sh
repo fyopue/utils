@@ -6,7 +6,10 @@ seed="${1}"
 prefix="download.aspx?p=all&download=csv&date="
 url="site url"
 fol="/home/userdir/kabudata/"
-mkdir /tmp/qtsdata
+if [ ! -d /tmp/qtsdata ]
+then
+  mkdir /tmp/qtsdata
+fi
 while [ "${seed}" != "0" ]
 do
   dt=`date -d "${seed} days ago" +%Y-%m-%d`
