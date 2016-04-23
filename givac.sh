@@ -1,5 +1,5 @@
 #!/bin/bash
-# Google Images Vacuum v1
+# Google Images Vacuum v1.1
 # $ givac.sh [searchword]
 cd /tmp/
 mkdir ${1}
@@ -7,11 +7,11 @@ mkdir ${1}
 # 検索語エンコード
 wrd=`echo ${1} | nkf -wMQ | tr = %`
 # 検索ページ取得
-wget "https://www.google.co.jp/search?q="${wrd}"&tbm=isch" -O ${1}.html --user-agent="Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko"
+wget "https://www.google.co.jp/search?q="${wrd}"&tbm=isch" -O ${1}.html --user-agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0"
 
 # ファイルURL取得
-joblist=( `cat ${1}.html | sed "s/imgres?\|&amp;/\n/g" | grep imgurl | sed "s/imgurl=//g"` )
-reflist=( `cat ${1}.html | sed "s/&amp;/\n/g" | grep imgrefurl | sed "s/imgrefurl=//g"` )
+joblist=( `cat ${1}.html | sed "s/,/\n/g" | grep \"ou\"\: | sed -e "s/\"ou\"\://g" -e "s/\"//g"` )
+reflist=( `cat ${1}.html | sed "s/,/\n/g" | grep \"ru\"\: | sed -e "s/\"ru\"\://g" -e "s/\"//g"` )
 
 # ファイル取得、取得URLログ書き出し
 for (( i = 0; i < ${#joblist[@]}; i++ ))
